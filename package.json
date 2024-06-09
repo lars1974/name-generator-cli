@@ -1,5 +1,10 @@
 {
   "name": "name-generator",
+  "name": "@lars1974/my-package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lars1974/node-name-generator.git"
+  },
   "version": "0.0.1",
   "description": "generic configureable name generator ",
   "main": "index.js",
@@ -7,6 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -21,3 +27,4 @@
     "name-generator": "./index.js"
   }
 }
+
