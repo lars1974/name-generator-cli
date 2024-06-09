@@ -5,7 +5,7 @@
 
     "url": "git+https://github.com/lars1974/node-name-generator.git"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "generic configureable name generator ",
   "main": "index.js",
   "type": "module",

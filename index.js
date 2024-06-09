@@ -13,6 +13,8 @@ program
     .action(generate)
 
 function generate()  {
+    console.log("version: 0.0.3")
+
     let inputs = createInputMapFromArgs(program.opts().inputs);
 
     let yaml = readYamlFileToMap("./test.yaml")
