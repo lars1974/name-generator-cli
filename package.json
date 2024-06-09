@@ -1,6 +1,5 @@
 {
-  "name": "name-generator",
-  "name": "@lars1974/my-package",
+  "name": "@lars1974/name-generator",
   "repository": {
     "type": "git",
     "url": "https://github.com/lars1974/node-name-generator.git"
