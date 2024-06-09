@@ -2,7 +2,8 @@
   "name": "@lars1974/name-generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lars1974/node-name-generator.git"
+
+    "url": "git+https://github.com/lars1974/node-name-generator.git"
   },
   "version": "0.0.2",
   "description": "generic configureable name generator ",
