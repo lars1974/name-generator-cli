@@ -24,6 +24,6 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
 
 
-      - run: npm publish
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
