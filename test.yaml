@@ -14,4 +14,5 @@ outputs:
     pattern: "{app:10}-{branch:50}-{build:15}-{hash:6}"
     postProcessors:
       - universal
+      - lowerCase
     maxLength: 50
