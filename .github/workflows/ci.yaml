@@ -25,6 +25,8 @@ jobs:
 
       - name: publish
         if: github.ref_type == 'tag'
-        run: npm publish --access public
+        run: |
+          npm version from-git --no-git-tag-version
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
