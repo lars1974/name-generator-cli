@@ -1,5 +1,5 @@
 
-import {generateHashFromMapValues} from "../src/processor.js";
+import {createLengthMapFromTemplate, generateHashFromMapValues} from "../src/processor.js";
 import * as assert from "assert";
 
 
@@ -11,6 +11,15 @@ import * as assert from "assert";
             input.set('name2', 'value2');
             assert.strictEqual(generateHashFromMapValues(input), "32c70b05");
         });
+
+        it('create length map from template', function () {
+            const map = createLengthMapFromTemplate("{branch:100}-{hash:4}-{other}")
+            assert.strictEqual(map.get("branch"), 100);
+            assert.strictEqual(map.get("hash"), 4);
+            assert.strictEqual(map.get("other"), 250);
+        });
+
+
     });
 
 
