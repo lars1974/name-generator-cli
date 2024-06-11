@@ -22,7 +22,7 @@ function generate()  {
     if(program.opts().version) echoVersion();
 
     let inputs = createInputMapFromArgs(program.opts().inputs);
-    let yaml = readYamlFileToMap("./test.yaml")
+    let yaml = readYamlFileToMap(program.opts().configFile)
     let generatedNamesMap = generateNames(yaml.get("outputs"), inputs);
 
     echoNames(generatedNamesMap, program.opts().outputFormat, program.opts().outputFile, program.opts().singleOutput);
