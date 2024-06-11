@@ -20,7 +20,7 @@
     "sync-request": "^6.1.0"
   },
   "bin": {
-    "name-generator": "./index.js"
+    "name-generator": "index.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
