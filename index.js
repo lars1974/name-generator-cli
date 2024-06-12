@@ -6,7 +6,8 @@ import {echoNames} from "./src/outputter.js";
 import {dirname} from "path";
 import {fileURLToPath} from "url";
 import fs from "fs";
-import {readYamlFileToMap} from "./src/configreader.js";
+import {readYaml, yamlToMap} from "./src/configreader.js";
+import {validateInput} from "./src/validator.js";
 
 program
     .option('-i, --inputs <values...>', "add inputs on the form key1=value1 key2=value2")
@@ -15,6 +16,7 @@ program
     .option('-v, --version', "output the version number")
     .option('-f, --outputFile <file>', "file")
     .option('-s, --singleOutput <singleOutput>', "output single value to console")
+    .option('-y, --echoYamlConfig', "show yaml config file")
     .description('Name generator based on a yaml config file')
     .action(generate)
 
@@ -22,8 +24,17 @@ function generate()  {
     if(program.opts().version) echoVersion();
 
     let inputs = createInputMapFromArgs(program.opts().inputs);
-    let yaml = readYamlFileToMap(program.opts().configFile)
-    let generatedNamesMap = generateNames(yaml.get("outputs"), inputs);
+    let yamlString = readYaml(program.opts().configFile)
+    let yamlMap = yamlToMap(yamlString);
+
+    if(program.opts().echoYamlConfig) {
+        console.log(yamlString);
+        process.exit(0);
+    }
+
+    validateInput(yamlMap.get("inputs"), inputs.keys());
+
+    let generatedNamesMap = generateNames(yamlMap.get("outputs"), inputs);
 
     echoNames(generatedNamesMap, program.opts().outputFormat, program.opts().outputFile, program.opts().singleOutput);
 }
