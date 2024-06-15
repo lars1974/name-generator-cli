@@ -1,5 +1,5 @@
 {
-  "name": "@lars1974/hello-world-cli",
+  "name": "@lars1974/name-generator-cli",
   "version": "0.0.0",
   "description": "",
   "files": [
@@ -12,7 +12,7 @@
     "all": "npm install && tsc && jest && npm pack"
   },
   "bin": {
-    "@lars1974/hello-world-cli": "dist/index.js"
+    "@lars1974/name-generator-cli": "dist/index.js"
   },
   "keywords": [],
   "author": "",
