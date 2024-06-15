@@ -19,11 +19,11 @@ export const readYaml = (input: string): string => {
     }
 };
 
-export const parseYaml = (input: string): ModelRoot => {
-    return yaml.load(input) as ModelRoot;
+export const parseYaml = (input: string): ConfigRoot => {
+    return yaml.load(input) as ConfigRoot;
 }
 
-export class ModelOutput {
+export class ConfigOutput {
     name: string;
     pattern: string;
     postProcessors: string[];
@@ -37,11 +37,11 @@ export class ModelOutput {
     }
 }
 
-export class ModelRoot {
+export class ConfigRoot {
     inputs: string[];
-    outputs: ModelOutput[];
+    outputs: ConfigOutput[];
 
-    constructor(inputs: string[],  outputs: ModelOutput[]) {
+    constructor(inputs: string[],  outputs: ConfigOutput[]) {
         this.inputs = inputs;
         this.outputs = outputs;
     }

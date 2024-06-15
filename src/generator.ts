@@ -1,4 +1,4 @@
-import {ModelOutput} from "./configuration";
+import {ConfigOutput} from "./configuration";
 
 export function generateHashFromMapValues(input: Map<string, string>) {
     let str = "";
@@ -12,29 +12,31 @@ export function generateHashFromMapValues(input: Map<string, string>) {
     return (hash >>> 0).toString(16);
 }
 
-export function generateNames(inputs: Map<string, string>, outputs: ModelOutput[]): Map<string, string> {
+export function generateNames(inputs: Map<string, string>, outputs: ConfigOutput[]): Map<string, string> {
     inputs.set("hash", generateHashFromMapValues(inputs))
     let map = new Map<string, string>();
     outputs.forEach(outputConfig => { map.set(outputConfig.name, generateName(inputs, outputConfig)); });
     return map;
 }
 
-export function generateName(inputs: Map<string, string>, output: ModelOutput): string {
-    let trinMao = trimStringToMaxLength(getTokenLengthMap(output.pattern), inputs);
+export function generateName(inputs: Map<string, string>, output: ConfigOutput): string {
+    let trimmedLengthMap = trimStringToMaxLength(getTokenLengthMap(output.pattern), inputs);
     let template = removeNumbersInCurlyBraces(output.pattern)
 
-    let generatedName = template.replace(/{(\w+)}/g, function (match, key) {
-        return trinMao.get(key) || match;
-    });
+    let generatedName = fillValuesInTemplate(trimmedLengthMap, template);
 
     if (generatedName.length > output.maxLength) {
-        trinMao = truncateLongestString(trinMao, generatedName.length - output.maxLength)
-        generatedName = template.replace(/{(\w+)}/g, function (match, key) {
-            return trinMao.get(key) || match;
-        });
+        trimmedLengthMap = truncateLongestString(trimmedLengthMap, generatedName.length - output.maxLength)
+        fillValuesInTemplate(trimmedLengthMap, template);
     }
 
-    return postProcess(generatedName, ['uppercase', 'lowercase', 'universal']);
+    return postProcess(generatedName, output.postProcessors);
+}
+
+export function fillValuesInTemplate(trimmedMap: Map<string, string>, template: string) : string {
+    return template.replace(/{(\w+)}/g, function (match, key) {
+        return trimmedMap.get(key) || match;
+    });
 }
 
 export function getTokenLengthMap(template: string): Map<string, number> {

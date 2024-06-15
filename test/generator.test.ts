@@ -1,5 +1,5 @@
 import {describe, expect, test} from '@jest/globals';
-import {generateHashFromMapValues, getTokenLengthMap, truncateLongestString} from '../src/generator';
+import {fillValuesInTemplate, generateHashFromMapValues, getTokenLengthMap, truncateLongestString} from '../src/generator';
 
 describe('sum module', () => {
     test('tokenLengthMap', () => {
@@ -20,6 +20,17 @@ describe('sum module', () => {
         expect(result.get('key1')).toBe('longestS');
         expect(result.get('key2')).toBe('shortString');
         expect(result.get('key3')).toBe('shortS');
+    });
+
+    test( 'fill in values in template', () => {
+        let inputs : Map<string, string> = new Map();
+        inputs.set('key1', '1value1');
+        inputs.set('key2', '2value2');
+        inputs.set('key3', '3value3');
+
+        let template = "test{key1}-{key3}test{key3}";
+        let result = fillValuesInTemplate(inputs, template);
+        expect(result).toBe('test1value1-3value3test3value3');
     });
 
     test('generateHashFromMapValues', () => {
