@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 import {program} from "commander";
 import {parseYaml, readYaml} from "./src/configuration";
-
 import {generateNames} from "./src/generator";
 import * as path from "path";
 import * as fs from "fs";
 import {validateInput} from "./src/validator";
 import {echoNames} from "./src/outputter";
-
 
 program
     .option('-i, --inputs <values...>', "add inputs on the form key1=value1 key2=value2")
@@ -21,13 +19,13 @@ program
     .action(generate)
 
 function generate() {
-    if(program.opts().version) readAndPrintVersion();
+    if (program.opts().version) readAndPrintVersion();
 
     let inputs = createInputMapFromArgs(program.opts().inputs);
     let yamlString = readYaml(program.opts().configFile)
     let yamlMap = parseYaml(yamlString);
 
-    if(program.opts().echoYamlConfig) {
+    if (program.opts().echoYamlConfig) {
         console.log(yamlString);
         process.exit(0);
     }
@@ -42,7 +40,7 @@ function generate() {
 function createInputMapFromArgs(array: string[]): Map<string, string> {
     const map = new Map();
 
-    if(array === undefined) return map;
+    if (array === undefined) return map;
 
     array.forEach(item => {
         const [key, value] = item.split('=');
@@ -51,30 +49,10 @@ function createInputMapFromArgs(array: string[]): Map<string, string> {
     return map;
 }
 
-
 function readAndPrintVersion() {
-    // Define the path to the package.json file
     const packageJsonPath = path.resolve(__dirname, '..', 'package.json');
-
-    // Read the package.json file
-    fs.readFile(packageJsonPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading package.json:', err);
-            return;
-        }
-
-        // Parse the JSON data
-        try {
-            const packageJson = JSON.parse(data);
-            const version = packageJson.version;
-
-            // Print the version to the console
-            console.log('Version:', version);
-        } catch (parseError) {
-            console.error('Error parsing package.json:', parseError);
-        }
-    });
+    const packageJson = JSON.parse( fs.readFileSync(packageJsonPath, 'utf8'));
+    console.log('Version:', packageJson.version);
 }
-
 
 program.parse();

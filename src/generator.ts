@@ -3,9 +3,7 @@ import {ModelOutput} from "./configuration";
 export function generateHashFromMapValues(input: Map<string, string>) {
     let str = "";
 
-    input.forEach((value) => {
-        str += value;
-    });
+    input.forEach((value) => { str += value; });
 
     let hash = 5381;
     for (let i = 0; i < str.length; i++) {
@@ -15,39 +13,13 @@ export function generateHashFromMapValues(input: Map<string, string>) {
 }
 
 export function generateNames(inputs: Map<string, string>, outputs: ModelOutput[]): Map<string, string> {
-   let map = new Map<string, string>();
-    outputs.forEach(outputConfig => {
-        map.set(outputConfig.name, generateName(inputs, outputConfig));
-    });
+    inputs.set("hash", generateHashFromMapValues(inputs))
+    let map = new Map<string, string>();
+    outputs.forEach(outputConfig => { map.set(outputConfig.name, generateName(inputs, outputConfig)); });
     return map;
 }
 
 export function generateName(inputs: Map<string, string>, output: ModelOutput): string {
-
-    inputs.set("hash", generateHashFromMapValues(inputs))
-
-
-    let filledTemplate = fillValuesInTemplate(inputs, output)
-
-      return postProcess(filledTemplate, output.postProcessors)
-}
-
-
-export function getTokenLengthMap(template: string): Map<string, number> {
-    const map: Map<string, number> = new Map();
-    const regex = /{(\w+)(?::(\d+))?}/g;
-    const defaultValue = 250;
-    let match;
-
-    while ((match = regex.exec(template)) !== null) {
-        const key = match[1];
-        const value = match[2] ? parseInt(match[2], 10) : defaultValue;
-        map.set(key, value);
-    }
-    return map;
-}
-
-export function fillValuesInTemplate(inputs: Map<string, string>, output: ModelOutput) : string {
     let trinMao = trimStringToMaxLength(getTokenLengthMap(output.pattern), inputs);
     let template = removeNumbersInCurlyBraces(output.pattern)
 
@@ -63,6 +35,20 @@ export function fillValuesInTemplate(inputs: Map<string, string>, output: ModelO
     }
 
     return postProcess(generatedName, ['uppercase', 'lowercase', 'universal']);
+}
+
+export function getTokenLengthMap(template: string): Map<string, number> {
+    const map: Map<string, number> = new Map();
+    const regex = /{(\w+)(?::(\d+))?}/g;
+    const defaultValue = 250;
+    let match;
+
+    while ((match = regex.exec(template)) !== null) {
+        const key = match[1];
+        const value = match[2] ? parseInt(match[2], 10) : defaultValue;
+        map.set(key, value);
+    }
+    return map;
 }
 
 export function trimStringToMaxLength(lengthMap: Map<string, number>, valueMap: Map<string, string>) {

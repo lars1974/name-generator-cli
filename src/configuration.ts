@@ -2,8 +2,6 @@ import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 import request from "sync-request";
 
-
-// Helper function to determine if the input is a URL
 const isUrl = (input: string): boolean => {
     try {
         new URL(input);
@@ -13,7 +11,6 @@ const isUrl = (input: string): boolean => {
     }
 };
 
-// Main function to read YAML from either a file or a URL
 export const readYaml = (input: string): string => {
     if (isUrl(input)) {
         return request('GET', input).getBody('utf8');
@@ -38,22 +35,14 @@ export class ModelOutput {
         this.postProcessors = postProcessors;
         this.maxLength = maxLength;
     }
-
-
-
 }
 
 export class ModelRoot {
     inputs: string[];
     outputs: ModelOutput[];
 
-
     constructor(inputs: string[],  outputs: ModelOutput[]) {
         this.inputs = inputs;
         this.outputs = outputs;
     }
-
-
-
-
 }
