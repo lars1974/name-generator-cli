@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import * as yaml2 from 'yamljs';
+import * as yaml from 'js-yaml';
 import request from "sync-request";
 
 
@@ -23,7 +23,7 @@ export const readYaml = (input: string): string => {
 };
 
 export const parseYaml = (input: string): ModelRoot => {
-    return yaml2.parse(input) as ModelRoot;
+    return yaml.load(input) as ModelRoot;
 }
 
 export class ModelOutput {

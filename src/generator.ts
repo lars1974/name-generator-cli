@@ -48,8 +48,6 @@ export function getTokenLengthMap(template: string): Map<string, number> {
 }
 
 export function fillValuesInTemplate(inputs: Map<string, string>, output: ModelOutput) : string {
-
-
     let trinMao = trimStringToMaxLength(getTokenLengthMap(output.pattern), inputs);
     let template = removeNumbersInCurlyBraces(output.pattern)
 
@@ -57,16 +55,12 @@ export function fillValuesInTemplate(inputs: Map<string, string>, output: ModelO
         return trinMao.get(key) || match;
     });
 
-    console.log(generatedName);
-
-
     if (generatedName.length > output.maxLength) {
         trinMao = truncateLongestString(trinMao, generatedName.length - output.maxLength)
         generatedName = template.replace(/{(\w+)}/g, function (match, key) {
             return trinMao.get(key) || match;
         });
     }
-    console.log(generatedName);
 
     return postProcess(generatedName, ['uppercase', 'lowercase', 'universal']);
 }

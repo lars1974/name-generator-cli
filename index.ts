@@ -23,11 +23,10 @@ program
 function generate() {
     if(program.opts().version) readAndPrintVersion();
 
-    console.log("hej")
     let inputs = createInputMapFromArgs(program.opts().inputs);
     let yamlString = readYaml(program.opts().configFile)
     let yamlMap = parseYaml(yamlString);
-    console.log("hej")
+
     if(program.opts().echoYamlConfig) {
         console.log(yamlString);
         process.exit(0);

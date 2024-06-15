@@ -1,11 +1,12 @@
-# code-name-generator
+# name-generator
 generic configurable name generator
 
+# install from github"
 
 npm login --scope=@lars1974 --registry=https://npm.pkg.github.com
 
+npm install -g @lars1974/name-generator
 
-npm install @lars1974/name-generator
+# build and run
 
-
-npm i -g -f && name-generator --inputs branch=feature/Fox-34534-msdf-sdf app=myapp build=12
+npm run all && npm i -g lars1974-name-generator-cli-0.0.0.tgz && name-generator-cli
