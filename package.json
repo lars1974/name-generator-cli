@@ -1,30 +1,32 @@
 {
-  "name": "@lars1974/name-generator",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lars1974/node-name-generator.git"
-  },
-  "version": "0.0.0",
-  "description": "generic configureable name generator ",
-  "main": "index.js",
-  "type": "module",
+  "name": "@lars1974/hello-world-cli",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "dist/**"
+  ],
+  "main": "dist/index.js",
   "scripts": {
-    "test": "mocha"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@lars1974/name-generator": "^0.0.3",
-    "commander": "^12.1.0",
-    "fs": "^0.0.1-security",
-    "js-yaml": "^4.1.0",
-    "sync-request": "^6.1.0"
+    "test": "jest",
+    "build": "tsc && npm pack"
   },
   "bin": {
-    "name-generator": "index.js"
+    "@lars1974/hello-world-cli": "dist/index.js"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "jest": "^29.7.0",
-    "mocha": "^10.4.0"
+    "@jest/globals": "^29.7.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/yamljs": "^0.2.34",
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "js-yaml": "^4.1.0",
+    "sync-request": "^6.1.0",
+    "yamljs": "^0.3.0"
   }
 }
