@@ -20,20 +20,33 @@ export const readYaml = (input: string): string => {
 };
 
 export const parseYaml = (input: string): ConfigRoot => {
+    console.dir(yaml.load(input) as ConfigRoot);
     return yaml.load(input) as ConfigRoot;
 }
 
 export class ConfigOutput {
     name: string;
-    pattern: string;
+    template: string;
     postProcessors: string[];
     maxLength: number;
+    conditionalTemplates: ConfigConditionalTemplate[]
 
-    constructor(name: string, pattern: string, postProcessors: string[], maxLength: number) {
+    constructor(name: string, template: string, postProcessors: string[], maxLength: number, conditionalTemplates: ConfigConditionalTemplate[]) {
         this.name = name;
-        this.pattern = pattern;
+        this.template = template;
         this.postProcessors = postProcessors;
         this.maxLength = maxLength;
+        this.conditionalTemplates = conditionalTemplates;
+    }
+}
+
+export class ConfigConditionalTemplate {
+    condition: string;
+    template: string;
+
+    constructor(condition: string, template: string) {
+        this.condition = condition;
+        this.template = template;
     }
 }
 

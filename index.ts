@@ -53,6 +53,7 @@ function readAndPrintVersion() {
     const packageJsonPath = path.resolve(__dirname, '..', 'package.json');
     const packageJson = JSON.parse( fs.readFileSync(packageJsonPath, 'utf8'));
     console.log('Version:', packageJson.version);
+    process.exit(0)
 }
 
 program.parse();

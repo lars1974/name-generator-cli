@@ -20,8 +20,11 @@ export function generateNames(inputs: Map<string, string>, outputs: ConfigOutput
 }
 
 export function generateName(inputs: Map<string, string>, output: ConfigOutput): string {
-    let trimmedLengthMap = trimStringToMaxLength(getTokenLengthMap(output.pattern), inputs);
-    let template = removeNumbersInCurlyBraces(output.pattern)
+    let templateRaw = getTemplate(inputs, output);
+    console.log("template FOUND "+templateRaw)
+    let trimmedLengthMap = trimStringToMaxLength(getTokenLengthMap(templateRaw), inputs);
+    let template = removeNumbersInCurlyBraces(templateRaw)
+
 
     let generatedName = fillValuesInTemplate(trimmedLengthMap, template);
 
@@ -31,6 +34,39 @@ export function generateName(inputs: Map<string, string>, output: ConfigOutput):
     }
 
     return postProcess(generatedName, output.postProcessors);
+}
+
+export function getTemplate(inputMap: Map<string,string>, output: ConfigOutput): string {
+    console.log(output.conditionalTemplates)
+    if(output.conditionalTemplates != undefined && output.conditionalTemplates.length > 0) {
+        for(const conditionalTemplate of output.conditionalTemplates) {
+            console.log(conditionalTemplate);
+            console.log(conditionalTemplate.template)
+            const [inputField, condition, value] = conditionalTemplate.condition.split(' ');
+            console.log(conditionalTemplate.template)
+            if(checkCondition(inputMap.get(inputField)! , condition, value)) {
+                console.log("BINGO"+conditionalTemplate.template)
+                return conditionalTemplate.template;
+            }
+        }
+        console.log("TEMPALRff "+output.template)
+        return  output.template;
+    }
+    return "template"
+}
+
+export function checkCondition(input: string, condition: string, value: string): boolean {
+    console.log("cond " + input + " "+  condition +" "+ value);
+    switch (condition.toLowerCase()) {
+        case 'equals':
+            console.log("eq " + condition);
+            return (input === value);
+        case 'contains':
+            return (input.includes(value));
+        default:
+            console.log("Invalid condition: " + condition);
+            return false
+    }
 }
 
 export function fillValuesInTemplate(trimmedMap: Map<string, string>, template: string) : string {

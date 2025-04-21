@@ -5,13 +5,22 @@ inputs:
 
 outputs:
   - name: ucBranch
-    pattern: "{branch:40}"
+    template: "{branch:40}"
     maxLength: 50
     postProcessors:
       - universal
       - lowerCase
   - name: namespace
-    pattern: "{app:10}-{branch:50}-{build:15}-{hash:6}"
+    template: "{app:10}-{branch:50}-{build:15}-{hash:6}"
+    postProcessors:
+      - universal
+      - lowerCase
+    maxLength: 50
+  - name: release
+    conditionalTemplates:
+      - template: "{app:10}-{branch:50}-{build:15}-release"
+        condition: "branch equals main"
+
     postProcessors:
       - universal
       - lowerCase
